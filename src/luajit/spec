@@ -1,0 +1,79 @@
+# defines
+# versions
+%define main_version    2.0.5
+%define release_version 20191110
+%define luajit_version 2.0.5
+# summary
+Name:          luajit
+Summary:       LuaJIT (adapted version by OpenResty)
+Version:       %{main_version}
+Release:       %{release_version}
+Vendor:        OpenResty
+URL:           https://github.com/openresty/luajit2
+License:       MIT
+Epoch:         1
+ExclusiveArch: %{ix86} x86_64
+# sources
+Source0: https://github.com/openresty/luajit2/archive/v%{luajit_version}.tar.gz
+# build params
+BuildRoot: %{_tmppath}/%{name}-%{main_version}-%{release_version}-root
+
+# package
+%package devel
+Summary:  Development files for luajit
+Requires: luajit%{?_isa} = %{main_version}-%{release_version}
+
+# description
+%description
+LuaJIT (adapted version by OpenResty).
+
+# description devel
+%description devel
+This package contains development files for LuaJIT (adapted version by OpenResty).
+
+# prep
+%prep
+%setup -q -n luajit2-%{luajit_version}
+echo '#!/bin/sh' > ./configure
+%{__chmod} +x ./configure
+
+# build
+%build
+%configure
+%{__make} amalg Q= E=@: PREFIX=%{_prefix} TARGET_STRIP=: \
+                CFLAGS="%{optflags}" \
+                %{?multilib_flag} \
+                %{?_smp_mflags}
+%global multilib_flag MULTILIB=lib64
+
+# install
+%install
+# comment me
+%make_install PREFIX=%{_prefix} \
+              %{?multilib_flag}
+find %{buildroot} -type f -name *.a -delete
+
+# files
+%files
+%{_bindir}/luajit
+%{_bindir}/luajit-*
+%{_libdir}/libluajit*.so.*
+%{_datadir}/luajit-*/
+%{_mandir}/man1/luajit*
+
+# files devel
+%files devel
+%{_includedir}/luajit-*/
+%{_libdir}/libluajit*.so
+%{_libdir}/pkgconfig/*.pc
+
+# post
+%post -p /sbin/ldconfig
+
+# postun
+%postun -p /sbin/ldconfig
+
+# changelog
+%changelog
+* Sun Nov 10 2019 Pavel Kurkin <p.kurkin@life-pain.net>
+- luajit 2.0.5
