@@ -2,7 +2,7 @@ param ([string] $SpecName)
 
 $BasePath = $PSScriptRoot
 
-New-Item -ItemType Directory -Force -Path $BASEPATH/../src/$SPECNAME
+New-Item -ItemType Directory -Force -Path $BASEPATH/../rpm/$SPECNAME
 
 docker run `
        -it `

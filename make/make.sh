@@ -4,8 +4,8 @@ SPECNAME=$1
 
 BASEPATH=$(dirname "$0")
 
-if [ ! -d $BASEPATH/../src/$SPECNAME ]; then
-    mkdir -p $BASEPATH/../src/$SPECNAME
+if [ ! -d $BASEPATH/../rpm/$SPECNAME ]; then
+    mkdir -p $BASEPATH/../rpm/$SPECNAME
 fi
 
 docker run `
