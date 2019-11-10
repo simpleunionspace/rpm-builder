@@ -17,8 +17,9 @@ RUN yum -y update \
     && useradd builder -u 1000 -m -G users,wheel \
     && echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && mkdir -p /opt/builder \
+    && dos2unix /opt/builder/*.sh \
     && chown -R builder:root /opt/builder/ \
-    && chmod -R 750 /opt/builder/
+    && chmod -R 777 /opt/builder/
 
 COPY configs/ /
 
@@ -30,7 +31,6 @@ VOLUME /opt/builder/out
 CMD mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS} \
     && cp -f /opt/builder/in/spec ~/rpmbuild/SPECS/ \
     && if [ -d /opt/builder/in/src ]; then cp -rf /opt/builder/in/src/* ~/rpmbuild/SOURCES/; fi \
-    && dos2unix /opt/builder/*.sh \
     && bash /opt/builder/sources.sh \
     && dos2unix ~/rpmbuild/SPECS/spec \
     && spectool -g -R ~/rpmbuild/SPECS/spec \
