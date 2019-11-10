@@ -15,7 +15,9 @@ RUN yum -y update \
     && yum clean all \
     && yum clean all \
     && useradd builder -u 1000 -m -G users,wheel \
-    && echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+    && echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && chown -R /opt/builder/ \
+    && chmod -R 750 /opt/builder/
 
 COPY configs/ /
 
