@@ -13,9 +13,13 @@ RUN yum -y update \
                       automake autoconf \
                       spectool rpm-build \
     && yum clean all \
-    && yum clean all
+    && yum clean all \
+    && useradd builder -u 1000 -m -G users,wheel \
+    && echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 COPY configs/ /
+
+USER builder
 
 VOLUME /opt/builder/in
 VOLUME /opt/builder/out
