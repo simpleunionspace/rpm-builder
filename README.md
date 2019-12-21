@@ -1,6 +1,15 @@
-# rpm-builder
+# RPM builder
 
 RPM builder. Based on CentOS 8.
+
+* on GitHub
+  * [RPM builder](https://github.com/life-pain/rpm-builder)
+  * [workspace template](https://github.com/life-pain/rpm-builder-workspace-template)
+  * [workspace of Life-Pain](https://github.com/life-pain/rpm-builder-workspace)
+
+* on Docker Hub
+
+  * [RPM builder](https://hub.docker.com/r/lifepainspace/rpm-builder)
 
 ## Table of contents
 
@@ -13,6 +22,7 @@ RPM builder. Based on CentOS 8.
     - [Build](#steps_build)
 - [Output data](#output_data)
     - [Structure](#output_data_structure)
+- [Build](#build)
 
 ## Input data <a name="input_data"></a>
 
@@ -22,17 +32,17 @@ Container provide volume /opt/builder/in.
 
 ```bash
 /
-├── src                  # artifacts
-├── rpm.d.sources        # directory with rpm packages
-├── tar.d.sources        # directory with tar files
-├── zip.d.sources        # directory with zip files
-├── yum.sources          # file with names of rpm packages
-├── rpm.sources          # file with links to rpm packages
-├── tar.sources          # file with links to tar files
-├── zip.sources          # file with links to zip files
-├── git.sources          # file with links to git repositories
-├── mercurial.sources    # file with links to mercurial repositories
-└── subversion.sources   # file with links to subversion repositories
+├─ src                  # artifacts
+├─ rpm.d.sources        # directory with rpm packages
+├─ tar.d.sources        # directory with tar files
+├─ zip.d.sources        # directory with zip files
+├─ yum.sources          # file with names of rpm packages
+├─ rpm.sources          # file with links to rpm packages
+├─ tar.sources          # file with links to tar files
+├─ zip.sources          # file with links to zip files
+├─ git.sources          # file with links to git repositories
+├─ mercurial.sources    # file with links to mercurial repositories
+└─ subversion.sources   # file with links to subversion repositories
 ```
 
 ## Steps <a name="steps"></a>
@@ -92,3 +102,13 @@ Container provide volume /opt/builder/out.
 ### Structure <a name="output_data_structure"></a>
 
 Output directory repeats RPMS directory structure of rpmbuild.
+
+## Build <a name="build"></a>
+
+* on linux/macos
+
+  sh make/make.sh
+
+* on windows
+
+  .\make\make.ps1
